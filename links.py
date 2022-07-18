@@ -1,6 +1,7 @@
 import os
 
 from html.parser import HTMLParser
+from urllib.request import urlopen
 
 
 class LinksParser(HTMLParser):
@@ -16,16 +17,35 @@ class LinksParser(HTMLParser):
 
         The links should look as such:
             https://www.criterion.com/current/top-10-lists/348-ali-abbasi-s-top-10
-
-        :param tag:
-        :param attrs:
-        :return:
         """
         if tag == 'a' and attrs[0][1] == 'pk-c-tout__media pk-c-tout__media--small':
             self.links.append(dict(attrs).get('href'))
 
     def get_links(self):
         return self.links
+
+
+class MoviesParser(HTMLParser):
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.movies = []
+
+    def handle_starttag(self, tag, attrs):
+        """
+        Luckily for us the criterion website is updated and has consistent HTML formatting for scraping.
+        The rest is trivial, besides making sure that all the movie titles are consistent.
+
+        Our list is contained in the <ul> tag with the class attrs:
+            editorial-filmlist
+
+        There are 10 list items in the <ul> tag, ranked from 1 to 10.
+        The matter now is dealing with ranked ties and formatting for data collection purposes.
+        """
+        if tag == 'a' and attrs[0][1] == 'pk-c-tout__media pk-c-tout__media--small':
+            self.movies.append(dict(attrs).get('href'))
+
+    def get_movies(self):
+        return self.movies
 
 
 if __name__ == '__main__':
@@ -36,6 +56,4 @@ if __name__ == '__main__':
             parser = LinksParser()
             parser.feed(html)
             links = parser.get_links()
-            print(links)
-            print(len(links))
             f.close()
