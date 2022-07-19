@@ -1,7 +1,6 @@
 import os
 
 from html.parser import HTMLParser
-from urllib.request import urlopen
 
 
 class LinksParser(HTMLParser):
@@ -49,7 +48,9 @@ class MoviesParser(HTMLParser):
 
 
 if __name__ == '__main__':
-    html_file = os.path.join(os.path.dirname(__file__), 'top10.html')
+    cwd = os.getcwd()
+
+    html_file = os.path.join(cwd, 'top10.html')
     if os.path.exists(html_file):
         with open(html_file, 'r', encoding='utf-8') as f:
             html = f.read()
@@ -57,3 +58,8 @@ if __name__ == '__main__':
             parser.feed(html)
             links = parser.get_links()
             f.close()
+
+    f = open("links.txt", "w")
+    for link in links:
+        f.write(link + "\n")
+    f.close()
