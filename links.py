@@ -47,7 +47,7 @@ class MoviesParser(HTMLParser):
         return self.movies
 
 
-if __name__ == '__main__':
+def collect_links():
     cwd = os.getcwd()
 
     html_file = os.path.join(cwd, 'top10.html')
