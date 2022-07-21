@@ -25,6 +25,8 @@ class LinksParser(HTMLParser):
 
 
 list_regex = re.compile(r'<ul class="editorial-filmlist" (data-is-quickshop)?>(.*?)</ul>', re.UNICODE)
+director = re.compile(r'<h5 class="editorial-film-listitem__director tussock">(.*?)</h5>', re.UNICODE)
+movies = re.compile(r'<h3 class="editorial-film-listitem__title">(.*?)</h3>', re.UNICODE)
 
 if __name__ == "__main__":
     cwd = os.getcwd()
@@ -33,7 +35,7 @@ if __name__ == "__main__":
         for html in os.listdir(os.path.join(cwd, 'offline_links')):
             with open(os.path.join(cwd, 'offline_links', html), 'r', encoding='utf-8') as f:
                 html = f.read()
-                print(re.search(list_regex, html).group(2))
+                print(re.findall(director, html))
                 break
     else:
         exit()

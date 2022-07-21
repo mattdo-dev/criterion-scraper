@@ -17,8 +17,9 @@ if __name__ == "__main__":
                 with urllib.request.urlopen(req) as response:
                     html = response.read()
                     with open(os.path.join(offline_links, f'{str(i)}.html'), 'w', encoding='utf-8') as f2:
-                        f2.write(str(html))
+                        f2.write(html.decode('utf-8'))
                         f2.close()
                 i += 1
+                break
 
             f.close()
