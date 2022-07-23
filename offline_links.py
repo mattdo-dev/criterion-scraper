@@ -20,6 +20,5 @@ if __name__ == "__main__":
                         f2.write(html.decode('utf-8'))
                         f2.close()
                 i += 1
-                break
 
             f.close()
