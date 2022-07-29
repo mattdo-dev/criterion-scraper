@@ -1,6 +1,7 @@
-import os
-
 from html.parser import HTMLParser
+from urllib.request import urlopen, Request
+
+to_get = 'https://www.criterion.com/current/top-10-lists'
 
 
 class LinksParser(HTMLParser):
@@ -48,18 +49,22 @@ class MoviesParser(HTMLParser):
 
 
 def collect_links():
-    cwd = os.getcwd()
+    # req = Request(to_get, headers={'User-Agent': 'Chrome/41.0.2228.0'})
+    # with open('top10.html', 'w', encoding='utf-8') as f:
+    #     f.write(urlopen(req).read().decode('utf-8'))
 
-    html_file = os.path.join(cwd, 'top10.html')
-    if os.path.exists(html_file):
-        with open(html_file, 'r', encoding='utf-8') as f:
-            html = f.read()
-            parser = LinksParser()
-            parser.feed(html)
-            links = parser.get_links()
-            f.close()
+    with open('top10.html', 'r', encoding='utf-8') as f:
+        html = f.read()
+        parser = LinksParser()
+        parser.feed(html)
+        links = parser.get_links()
+        f.close()
 
     f = open("links.txt", "w")
     for link in links:
         f.write(link + "\n")
     f.close()
+
+
+if __name__ == "__main__":
+    collect_links()

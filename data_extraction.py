@@ -33,26 +33,91 @@ movies = re.compile(r'<h3 class="editorial-film-listitem__title">(.*?)</h3>', re
 if __name__ == "__main__":
     cwd = os.getcwd()
 
-    csv_in = pd.DataFrame(columns=['person', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'])
+    cols = ['person', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
+    person = []
+    a1 = []
+    a2 = []
+    a3 = []
+    a4 = []
+    a5 = []
+    a6 = []
+    a7 = []
+    a8 = []
+    a9 = []
+    a10 = []
+    a11 = []
+    a12 = []
+    a13 = []
+    a14 = []
+    a15 = []
+
+    csv_in = pd.DataFrame(columns=cols)
 
     if os.path.exists(os.path.join(cwd, 'offline_links')):
         for html in os.listdir(os.path.join(cwd, 'offline_links')):
-            with open(os.path.join(cwd, 'offline_links', '93.html'), 'r', encoding='utf-8') as f:
+            with open(os.path.join(cwd, 'offline_links', html), 'r', encoding='utf-8') as f:
                 content = f.read()
                 soup = BeautifulSoup(content, 'html.parser')
                 test = soup.find('article').get_attribute_list('data-article-title')
-                csv_in['person'] = str(test).replace('’s Top 10', '')[2:-2]
+                person.append(str(test).replace('’s Top 10', '')[2:-2])
+                col = None
+                films = ""
                 for index in soup.find_all('p', attrs={'class': 'count'}):
-                    i = re.search(r'(10|[1-9])', index.text, re.MULTILINE)
-                    if i is not None:
-                        print(i.group(0))
-                        titles = BeautifulSoup(str(index.next_sibling.next_sibling), 'html.parser')
-                        print(index.next_sibling.next_sibling)
-                        print(titles.find_all('h3', attrs={'class': 'editorial-film-listitem__title'}))
+                    titles = BeautifulSoup(str(index.next_sibling.next_sibling), 'html.parser')
+                    col = index.text.replace("(tie)", "").replace(" ", "")
+                    if index.text != ' ':
+                        if col == '1':
+                            a1.append(films)
+                        elif col == '2':
+                            a2.append(films)
+                        elif col == '3':
+                            a3.append(films)
+                        elif col == '4':
+                            a4.append(films)
+                        elif col == '5':
+                            a5.append(films)
+                        elif col == '6':
+                            a6.append(films)
+                        elif col == '7':
+                            a7.append(films)
+                        elif col == '8':
+                            a8.append(films)
+                        elif col == '9':
+                            a9.append(films)
+                        elif col == '10':
+                            a10.append(films)
+                        elif col == '11':
+                            a11.append(films)
+                        elif col == '12':
+                            a12.append(films)
+                        elif col == '13':
+                            a13.append(films)
+                        elif col == '14':
+                            a14.append(films)
+                        elif col == '15':
+                            a15.append(films)
+                        films: str = titles.find('h3', attrs={'class': 'editorial-film-listitem__title'}).text
+                    elif index.text == ' ':
+                        films: str = films + '|' + titles.find('h3',
+                                                               attrs={'class': 'editorial-film-listitem__title'}).text
 
-                break
-            break
+        csv_in['person'] = pd.Series(person)
+        csv_in['1'] = pd.Series(a1)
+        csv_in['2'] = pd.Series(a2)
+        csv_in['3'] = pd.Series(a3)
+        csv_in['4'] = pd.Series(a4)
+        csv_in['5'] = pd.Series(a5)
+        csv_in['6'] = pd.Series(a6)
+        csv_in['7'] = pd.Series(a7)
+        csv_in['8'] = pd.Series(a8)
+        csv_in['9'] = pd.Series(a9)
+        csv_in['10'] = pd.Series(a10)
+        csv_in['11'] = pd.Series(a11)
+        csv_in['12'] = pd.Series(a12)
+        csv_in['13'] = pd.Series(a13)
+        csv_in['14'] = pd.Series(a14)
+        csv_in['15'] = pd.Series(a15)
 
-        csv_in.to_csv('data.csv', sep='^', index=False, mode='w', encoding='utf-8')
+        csv_in.to_csv('data.csv', sep=';', index=False, mode='w', encoding='utf-8')
     else:
         exit()
