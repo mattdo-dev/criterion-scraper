@@ -33,27 +33,51 @@ movies = re.compile(r'<h3 class="editorial-film-listitem__title">(.*?)</h3>', re
 if __name__ == "__main__":
     cwd = os.getcwd()
 
-    cols = ['person', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
-    person = []
-    a1 = []
-    a2 = []
-    a3 = []
-    a4 = []
-    a5 = []
-    a6 = []
-    a7 = []
-    a8 = []
-    a9 = []
-    a10 = []
-    a11 = []
-    a12 = []
-    a13 = []
-    a14 = []
-    a15 = []
+    cols = ['person', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
 
     csv_in = pd.DataFrame(columns=cols)
 
     if os.path.exists(os.path.join(cwd, 'offline_links')):
+        html_files = os.listdir(os.path.join(cwd, 'offline_links'))
+        html_files_len = len(html_files)
+
+        person = [] * html_files_len
+        a1 = [] * html_files_len
+        a2 = [] * html_files_len
+        a3 = [] * html_files_len
+        a4 = [] * html_files_len
+        a5 = [] * html_files_len
+        a6 = [] * html_files_len
+        a7 = [] * html_files_len
+        a8 = [] * html_files_len
+        a9 = [] * html_files_len
+        a10 = [] * html_files_len
+        a11 = [] * html_files_len
+        a12 = [] * html_files_len
+        a13 = [] * html_files_len
+        a14 = [] * html_files_len
+        a15 = [] * html_files_len
+        a16 = [] * html_files_len
+
+        for i in range(0, len(html_files) + 1):
+            with open(os.path.join(cwd, 'offline_links', html_files[i]), 'r', encoding='utf-8') as f:
+                content = f.read()
+                soup = BeautifulSoup(content, 'html.parser')
+                test = soup.find('article').get_attribute_list('data-article-title')
+                person[i] = str(test).replace('’s Top 10', '')[2:-2]
+                col = None
+                films = ""
+                for index in soup.find_all('p', attrs={'class': 'count'}):
+                    titles = BeautifulSoup(str(index.next_sibling.next_sibling), 'html.parser')
+                    col = index.text.replace("(tie)", "").replace(" ", "")
+                    if index.text != ' ':
+                        if col == '1':
+                            a1[i] = films
+                        films: str = titles.find('h3', attrs={'class': 'editorial-film-listitem__title'}).text
+                    elif index.text == ' ':
+                        films: str = films + '|' + titles.find('h3',
+                                                               attrs={'class': 'editorial-film-listitem__title'}).text
+
         for html in os.listdir(os.path.join(cwd, 'offline_links')):
             with open(os.path.join(cwd, 'offline_links', html), 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -117,6 +141,7 @@ if __name__ == "__main__":
         csv_in['13'] = pd.Series(a13)
         csv_in['14'] = pd.Series(a14)
         csv_in['15'] = pd.Series(a15)
+        csv_in['16'] = pd.Series(a16)
 
         csv_in.to_csv('data.csv', sep=';', index=False, mode='w', encoding='utf-8')
     else:
