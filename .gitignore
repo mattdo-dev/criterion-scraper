@@ -1,6 +1,7 @@
 # Other
 offline_links
 *.py
+*.html
 .idea
 
 # Byte-compiled / optimized / DLL files
