@@ -72,12 +72,11 @@ if __name__ == "__main__":
                     titles = BeautifulSoup(str(index.next_sibling.next_sibling), 'html.parser')
                     col = index.text.replace("(tie)", "").replace(" ", "")
 
-                    if films == "":
-                        films = titles.find('h3', attrs={'class': 'editorial-film-listitem__title'}).text
-                    else:
+                    if index.text == ' ':
                         films = films + '|' + titles.find('h3', attrs={'class': 'editorial-film-listitem__title'}).text
+                    else:
+                        films = titles.find('h3', attrs={'class': 'editorial-film-listitem__title'}).text
 
-                    if index.text != ' ':
                         if col == '1':
                             a1[i] = films
                         elif col == '2':
@@ -110,7 +109,6 @@ if __name__ == "__main__":
                             a15[i] = films
                         elif col == '16':
                             a16[i] = films
-
         # for html in os.listdir(os.path.join(cwd, 'offline_links')):
         #     with open(os.path.join(cwd, 'offline_links', html), 'r', encoding='utf-8') as f:
         #         content = f.read()
