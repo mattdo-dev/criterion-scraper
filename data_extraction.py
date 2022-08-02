@@ -42,23 +42,23 @@ if __name__ == "__main__":
         html_files = os.listdir(os.path.join(cwd, 'offline_links'))
         html_files_len = len(html_files)
 
-        person = [] * html_files_len
-        a1 = [] * html_files_len
-        a2 = [] * html_files_len
-        a3 = [] * html_files_len
-        a4 = [] * html_files_len
-        a5 = [] * html_files_len
-        a6 = [] * html_files_len
-        a7 = [] * html_files_len
-        a8 = [] * html_files_len
-        a9 = [] * html_files_len
-        a10 = [] * html_files_len
-        a11 = [] * html_files_len
-        a12 = [] * html_files_len
-        a13 = [] * html_files_len
-        a14 = [] * html_files_len
-        a15 = [] * html_files_len
-        a16 = [] * html_files_len
+        person = [''] * html_files_len
+        a1 = [''] * html_files_len
+        a2 = [''] * html_files_len
+        a3 = [''] * html_files_len
+        a4 = [''] * html_files_len
+        a5 = [''] * html_files_len
+        a6 = [''] * html_files_len
+        a7 = [''] * html_files_len
+        a8 = [''] * html_files_len
+        a9 = [''] * html_files_len
+        a10 = [''] * html_files_len
+        a11 = [''] * html_files_len
+        a12 = [''] * html_files_len
+        a13 = [''] * html_files_len
+        a14 = [''] * html_files_len
+        a15 = [''] * html_files_len
+        a16 = [''] * html_files_len
 
         for i in range(0, len(html_files)):
             with open(os.path.join(cwd, 'offline_links', html_files[i]), 'r', encoding='utf-8') as f:

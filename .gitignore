@@ -1,7 +1,7 @@
 # Other
 offline_links
-top10.html
-data
+*.py
+.idea
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
