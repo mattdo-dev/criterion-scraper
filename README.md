@@ -15,4 +15,4 @@ Each row represents the list that the contributor has given.
 ## Notes
 
 Not all the contributors have submitted exactly 10 films. Some are tied, few mention non-criterion films,
-(e.g. Christopher Nolan and *Greed (1924)* (Erich von Stroheim) for 10^th place).
+(e.g. Christopher Nolan and *Greed (1924), dir. Erich von Stroheim* for 10th place), that are not mentioned in this dataset.
